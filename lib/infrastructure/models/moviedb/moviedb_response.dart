@@ -11,7 +11,7 @@ String movieDbResponseToJson(MovieDbResponse data) =>
     json.encode(data.toJson());
 
 class MovieDbResponse {
-  final Dates dates;
+  final Dates? dates;
   final int page;
   final List<Result> results;
   final int totalPages;
@@ -27,7 +27,7 @@ class MovieDbResponse {
 
   factory MovieDbResponse.fromJson(Map<String, dynamic> json) =>
       MovieDbResponse(
-        dates: Dates.fromJson(json["dates"]),
+        dates: json["dates"] ? Dates.fromJson(json["dates"]) : null,
         page: json["page"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
@@ -36,7 +36,7 @@ class MovieDbResponse {
       );
 
   Map<String, dynamic> toJson() => {
-        "dates": dates.toJson(),
+        "dates": dates == null ? {} : dates!.toJson(),
         "page": page,
         "results": List<dynamic>.from(results.map((x) => x.toJson())),
         "total_pages": totalPages,
